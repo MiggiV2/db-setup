@@ -1,7 +1,48 @@
 # Postgresql Setup with Docker
-### Prerequisites:
+## Prerequisites:
 - Ensure Docker is installed on your system. If it's not, you can download it from the official Docker website.
 - Basic familiarity with terminal or command prompt use.
+
+## Option 1 docker-compose (with pgAdmin)
+
+### Setup 1:
+Clone this repository.
+```shell
+git clone https://github.com/MiggiV2/db-setup.git
+```
+
+### Step 2:
+Go into the direcotry.
+```shell
+cd db-setup
+```
+
+### Setup 3:
+Start the service with docker-compose. (Add the -d flag to run detach)
+```shell
+docker compose up
+```
+
+### Setup 4:
+Access pgAdmin via your browser and login (see below).  
+Go to http://localhost:8080.  
+E-Mail: `student@thi.de`  
+Password: `123456789#`.
+
+### Setup 5:
+Connect to your postgres container.  
+Host: `postgres`  
+User: `student`  
+Password: `123456789#`
+
+### Explanation for Step 5:
+Docker compose create a virtual Docker network.  
+Both containers are in this network and can reach each other.  
+`postgres` is the service name from docker-compose.yaml. If you want to read more, see [How to reach docker containers by name instead of IP address?](https://stackoverflow.com/questions/31149501/how-to-reach-docker-containers-by-name-instead-of-ip-address)
+
+As postgres host, localhost:5432 will not work! The pgAdmin would use localhost inside the container, instead the docker host (maschine) localhost.
+
+## Option 2 docker run
 
 ### Step 1: Create a Docker Network
 First, we'll create a Docker network. This network will allow the containers to communicate with each other. In this case, it will let the container running `psql` connect to the PostgreSQL database container.
@@ -50,7 +91,7 @@ docker start my-postgres
 ```
 
 ### Step 2: Connect
-Same command from Step 3. The container was removed, because of the --rm option.
+Same command from Step 3. The container was removed because of the --rm option.
 ```shell
 docker run -it --rm --network db postgres:11 psql -h my-postgres -U postgres
 ```
