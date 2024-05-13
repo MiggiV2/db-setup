@@ -8,6 +8,8 @@ services:
       environment:
        - PGADMIN_DEFAULT_EMAIL=student@thi.de
        - PGADMIN_DEFAULT_PASSWORD=123456789#
+      volumes:
+       - pgadmin-config:/var/lib/pgadmin
 
     postgres:
       # Official Image from https://hub.docker.com/_/postgres
